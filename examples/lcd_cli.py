@@ -43,15 +43,30 @@ if my_arg == "--install-alias":
 if len(my_arg) > 16:
   my_arg = my_arg[0:lcd_dimensions[0]-1] + "\n" + my_arg[lcd_dimensions[0]-1:]
 
-# Initialize the LCD using the pins
-lcd = LCD.Adafruit_CharLCDPlate()
+def init_lcd():
+  # Initialize the LCD using the pins
+  lcd = LCD.Adafruit_CharLCDPlate()
+  lcd.clear()
+  return lcd
 
-lcd.clear()
-if my_arg == "--on":
-  lcd.set_color(1.0,1.0,1.0)
-elif my_arg == "--off":
-  lcd.set_color(0.0,0.0,0.0)
-else:
+def print_to_lcd(msg):
   lcd.set_color(1.0, 1.0, 1.0)
-  lcd.message(my_arg)
+  lcd.message(msg)
+
+def turn_off_lcd():
+  lcd.set_color(0.0,0.0,0.0)
+
+def turn_on_lcd():
+  lcd.set_color(1.0,1.0,1.0)
+
+
+lcd = init_lcd()
+
+if my_arg == "--on":
+  turn_on_lcd()
+elif my_arg == "--off":
+  turn_off_lcd()
+else:
+  print_to_lcd(my_arg)
+
 
